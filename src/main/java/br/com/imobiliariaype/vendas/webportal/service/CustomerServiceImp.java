@@ -23,8 +23,7 @@ public class CustomerServiceImp implements CustomerService {
 
     @Override
     public Mono<Customer> updateCustomer(Customer customer, String customer_id) {
-
-        return findCustomer(customer_id).doOnSuccess(updateCustomer -> {
+        return findCustomerById(customer_id).doOnSuccess(updateCustomer -> {
             updateCustomer.setName(customer.getName());
             updateCustomer.setAddress(customer.getAddress());
             updateCustomer.setPhone(customer.getPhone());
@@ -33,8 +32,8 @@ public class CustomerServiceImp implements CustomerService {
     }
 
     @Override
-    public Mono<Customer> findCustomer(String customerName) {
-        return null;
+    public Mono<Customer> findCustomerById(String customer_id) {
+        return customerRepository.findById(customer_id);
     }
 
     @Override

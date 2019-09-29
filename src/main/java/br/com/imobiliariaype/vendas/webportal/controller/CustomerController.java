@@ -24,11 +24,15 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @PostMapping("customers")
+    @PostMapping("/customers")
     public Mono<Customer> saveClient(@Valid @RequestBody Customer customer){
         LOGGER.info("Saving new Customer with id [{}]", customer.getId());
         return customerService.saveCustomer(customer);
     }
 
-
+    @GetMapping("/customers/{customer_id}")
+    public Mono<Customer> findById(@PathVariable String customer_id){
+        LOGGER.info("Looking for Customer with id [{}]", customer_id);
+        return customerService.findCustomerById(customer_id);
+    }
 }

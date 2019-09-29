@@ -9,7 +9,7 @@ public interface CustomerService {
 
     Mono<Customer> updateCustomer(Customer customer, String customer_id);
 
-    Mono<Customer> findCustomer(String customerName);
+    Mono<Customer> findCustomerById(String customerName);
 
     Mono<Customer> deleteCustomer(String customer_id);
 
