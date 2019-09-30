@@ -35,4 +35,11 @@ public class CustomerController {
         LOGGER.info("Looking for Customer with id [{}]", customer_id);
         return customerService.findCustomerById(customer_id);
     }
+
+    @DeleteMapping("/customers/{customer_id}")
+    public Mono<Customer> deleteCustomer(@PathVariable String customer_id){
+        LOGGER.info("Delete customer with id [{}]", customer_id);
+        return customerService.deleteCustomer(customer_id);
+    }
+
 }

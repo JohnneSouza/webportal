@@ -1,13 +1,19 @@
 package br.com.imobiliariaype.vendas.webportal.service;
 
+import br.com.imobiliariaype.vendas.webportal.exception.CustomerNotFound;
 import br.com.imobiliariaype.vendas.webportal.model.Customer;
 import br.com.imobiliariaype.vendas.webportal.repository.CustomerRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 @Service
 public class CustomerServiceImp implements CustomerService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomerServiceImp.class);
+    private static final String CUSTOMER_NOT_FOUND = "Customer not found";
 
     private CustomerRepository customerRepository;
 
@@ -18,6 +24,7 @@ public class CustomerServiceImp implements CustomerService {
 
     @Override
     public Mono<Customer> saveCustomer(Customer customer) {
+        LOGGER.info("Saving customer [{}] into repository", customer.getId());
         return customerRepository.save(customer);
     }
 
@@ -33,11 +40,14 @@ public class CustomerServiceImp implements CustomerService {
 
     @Override
     public Mono<Customer> findCustomerById(String customer_id) {
-        return customerRepository.findById(customer_id);
+        return customerRepository.findById(customer_id)
+                .switchIfEmpty(Mono.error(new CustomerNotFound(CUSTOMER_NOT_FOUND)));
     }
 
     @Override
     public Mono<Customer> deleteCustomer(String customer_id) {
-        return null;
+        return findCustomerById(customer_id).doOnSuccess(
+                customer -> customerRepository.deleteById(customer_id))
+                .doOnError(Throwable::getMessage);
     }
 }
