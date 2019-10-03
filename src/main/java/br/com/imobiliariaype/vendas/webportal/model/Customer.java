@@ -2,10 +2,12 @@ package br.com.imobiliariaype.vendas.webportal.model;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
 
 @Data
+@Document(collection = "customers")
 public class Customer {
 
     @Id
