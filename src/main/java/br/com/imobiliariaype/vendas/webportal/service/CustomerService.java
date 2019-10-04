@@ -1,16 +1,31 @@
 package br.com.imobiliariaype.vendas.webportal.service;
 
 import br.com.imobiliariaype.vendas.webportal.model.Customer;
+import br.com.imobiliariaype.vendas.webportal.repository.CustomerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-public interface CustomerService {
+@Service
+public class CustomerService {
 
-    Mono<Customer> saveCustomer(Customer customer);
+    private CustomerRepository customerRepository;
 
-    Mono<Customer> updateCustomer(Customer customer, String customer_id);
+    @Autowired
+    public CustomerService(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
 
-    Mono<Customer> findCustomerById(String customerName);
+    public Mono<Customer> saveCustomer(Customer customer){
+        return customerRepository.save(customer);
+    }
 
-    Mono<Customer> deleteCustomer(String customer_id);
+    public Flux<Customer> findByFirstName(String firstName) {
+        return customerRepository.findByFirstName(firstName);
+    }
 
+    public Flux<Customer> findByLastName(String lastName){
+        return customerRepository.findByLastName(lastName);
+    }
 }

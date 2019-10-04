@@ -3,47 +3,33 @@ package br.com.imobiliariaype.vendas.webportal.controller;
 import br.com.imobiliariaype.vendas.webportal.model.Customer;
 import br.com.imobiliariaype.vendas.webportal.service.CustomerService;
 import io.swagger.annotations.ApiOperation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/v1")
 public class CustomerController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CustomerController.class);
-
-    private final CustomerService customerService;
-
+    private CustomerService customerService;
 
     @Autowired
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
     }
 
-    @ApiOperation(value = "Save a new customer", response = Customer.class)
-    @PostMapping("/customers")
-    public Mono<Customer> saveClient(@Valid @RequestBody Customer customer){
-        LOGGER.info("Saving new Customer with id [{}]", customer.getId());
+    @ApiOperation(value = "Find a customer using firstName", response = Customer.class)
+    @GetMapping("/customer/{firstName}")
+    public Flux<Customer> findByFirstName(@PathVariable("firstName") String firstName){
+        return customerService.findByFirstName(firstName);
+    }
+
+    @ApiOperation(value = "Save a new Customer", response = Customer.class)
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/customer")
+    public Mono<Customer> saveCustomer(@RequestBody Customer customer){
         return customerService.saveCustomer(customer);
     }
-
-    @ApiOperation(value = "Find a customer")
-    @GetMapping("/customers/{customer_id}")
-    public Mono<Customer> findById(@PathVariable String customer_id){
-        LOGGER.info("Looking for Customer with id [{}]", customer_id);
-        return customerService.findCustomerById(customer_id);
-    }
-
-    @ApiOperation(value = "Delete a customer")
-    @DeleteMapping("/customers/{customer_id}")
-    public Mono<Customer> deleteCustomer(@PathVariable String customer_id){
-        LOGGER.info("Delete customer with id [{}]", customer_id);
-        return customerService.deleteCustomer(customer_id);
-    }
-
 }

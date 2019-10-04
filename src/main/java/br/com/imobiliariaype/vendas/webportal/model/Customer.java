@@ -12,9 +12,11 @@ public class Customer {
 
     @Id
     private String id;
-    @NotNull(message = "name must not be null")
-    private String name;
-    @NotNull(message = "phone must not be null")
+    @NotNull(message = "firstName must not be null")
+    private String firstName;
+    @NotNull(message = "lastName must not be null")
+    private String lastName;
+    private String id_document;
     private String phone;
     private Address address;
 
