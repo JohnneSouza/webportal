@@ -16,4 +16,7 @@ public interface CustomerRepository extends ReactiveCrudRepository<Customer, Str
 
     @Override
     <S extends Customer> Mono<S> save(S s);
+
+    @Override
+    Flux<Customer> findAll();
 }
