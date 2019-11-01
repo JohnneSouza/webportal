@@ -1,0 +1,196 @@
+{
+	"info": {
+		"_postman_id": "c42eda36-e1eb-4219-98b5-2ec3d70d254e",
+		"name": "WebPortal",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Private Properties",
+			"item": [
+				{
+					"name": "List Private Properties",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}:{{port}}/v1/property",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"v1",
+								"property"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save Private Property",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"address\" : {\n\t\t\t\"street\" : \"{{$randomStreetName}}\",\n\t\t\t\"number\" : \"{{$randomInt}}\",\n\t\t\t\"zip\" : \"{{$randomPhoneNumberExt}}\",\n\t\t\t\"neighborhood\" : \"{{$randomFirstName}}\",\n\t\t\t\"state\" : \"{{$randomAdjective}}\",\n\t\t\t\"city\" : \"{{$randomCity}}\"\n\t},\n\t\"value\" : {{$randomPrice}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}:{{port}}/v1/property",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"v1",
+								"property"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Customers",
+			"item": [
+				{
+					"name": "Find Customer by Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}:{{port}}/v1/customer/{{$randomWords}}",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"v1",
+								"customer",
+								"{{$randomWords}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find All Customers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}:{{port}}/v1/customer",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"v1",
+								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save Customer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\" : \"{{$randomFirstName}}\",\n\t\"lastName\" : \"{{$randomLastName}}\",\n\t\"id_document\" : \"{{$randomPhoneNumber}}\",\n\t\"phone\" : \"{{$randomPhoneNumber}}\",\n\t\"address\" : {\n\t\t\"street\" : \"{{$randomStreetName}}\",\n\t\t\"number\" : \"{{$randomInt}}\",\n\t\t\"zip\" : \"{{$randomPhoneNumberExt}}\",\n\t\t\"neighborhood\" : \"{{$randomFirstName}}\",\n\t\t\"state\" : \"{{$randomAdjective}}\",\n\t\t\"city\" : \"{{$randomCity}}\"\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}:{{port}}/v1/customer",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"v1",
+								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save a Property to Customer",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "customer_id",
+								"value": "5dbb688140ee2539b36635b5",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"address\" : {\n\t\t\t\"street\" : \"{{$randomStreetName}}\",\n\t\t\t\"number\" : \"{{$randomInt}}\",\n\t\t\t\"zip\" : \"{{$randomPhoneNumberExt}}\",\n\t\t\t\"neighborhood\" : \"{{$randomFirstName}}\",\n\t\t\t\"state\" : \"{{$randomAdjective}}\",\n\t\t\t\"city\" : \"{{$randomCity}}\"\n\t},\n\t\"value\" : {{$randomPrice}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}:{{port}}/v1/customer",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"v1",
+								"customer"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
