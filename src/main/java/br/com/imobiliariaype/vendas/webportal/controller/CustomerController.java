@@ -2,6 +2,7 @@ package br.com.imobiliariaype.vendas.webportal.controller;
 
 import br.com.imobiliariaype.vendas.webportal.model.Customer;
 import br.com.imobiliariaype.vendas.webportal.service.CustomerService;
+import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,8 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.thymeleaf.spring5.context.webflux.IReactiveDataDriverContextVariable;
 import org.thymeleaf.spring5.context.webflux.ReactiveDataDriverContextVariable;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Controller
 @RequestMapping("customers")
@@ -32,9 +34,7 @@ public class CustomerController {
 
     @GetMapping("/search")
     public String search(final Model model){
-        IReactiveDataDriverContextVariable context =
-                new ReactiveDataDriverContextVariable(customerService.findAll());
-        model.addAttribute("customers", context);
+        model.addAttribute("customers", new ReactiveDataDriverContextVariable(customerService.findAll()));
         return "/customers/search";
     }
 
@@ -47,10 +47,8 @@ public class CustomerController {
     }
 
     @GetMapping("/edit/{id}")
-    public String beforeEdit(@PathVariable("id") String id, ModelMap model){
-        IReactiveDataDriverContextVariable contextVariable =
-                new ReactiveDataDriverContextVariable(customerService.findById(id));
-        model.addAttribute("customer", contextVariable);
+    public String beforeEdit(@PathVariable("id") String id, Model model){
+        model.addAttribute("customer", new ReactiveDataDriverContextVariable(customerService.findById(id).flux()));
         return "customers/register";
     }
 
