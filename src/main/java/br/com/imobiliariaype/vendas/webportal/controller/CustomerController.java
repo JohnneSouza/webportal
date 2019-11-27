@@ -29,7 +29,7 @@ public class CustomerController {
 
     @GetMapping("/create")
     public String create(Customer customer) {
-        return "/customers/register";
+        return "/customers/create";
     }
 
     @GetMapping("/search")
@@ -49,7 +49,7 @@ public class CustomerController {
     @GetMapping("/edit/{id}")
     public String beforeEdit(@PathVariable("id") String id, Model model){
         model.addAttribute("customer", new ReactiveDataDriverContextVariable(customerService.findById(id).flux()));
-        return "customers/register";
+        return "customers/create";
     }
 
     @PostMapping("/edit")
