@@ -18,7 +18,7 @@ public class CustomerService {
         this.customerRepository = customerRepository;
     }
 
-    private Mono<Customer> findById(String id){
+    public Mono<Customer> findById(String id){
         return customerRepository.findById(id);
     }
 
